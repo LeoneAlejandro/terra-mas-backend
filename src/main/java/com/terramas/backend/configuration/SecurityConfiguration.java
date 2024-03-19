@@ -37,6 +37,7 @@ public class SecurityConfiguration {
 		
 		http
 			.csrf(csrf -> csrf.disable())
+			.headers((headers) -> headers.frameOptions().disable())
 	        .authorizeHttpRequests(auth -> auth
 	                .requestMatchers("/registration/**").permitAll()
 	        		.requestMatchers("/authenticate").permitAll()
@@ -47,9 +48,11 @@ public class SecurityConfiguration {
 	            )
 	        .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+            .cors();
 			
 		
 		return http.build();
+		
 	}
 }
