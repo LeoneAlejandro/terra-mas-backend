@@ -34,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
 		var user = appUserRepository.findByEmail(request.email()).orElseThrow();
 		var jwtToken = jwtService.generateToken(user);
-		return new AuthenticationResponse(jwtToken);
+		return new AuthenticationResponse(user.getFristName(),jwtToken, user.getAppUserRole());
 	}
 
 	
@@ -43,12 +43,12 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 		AppUser user = appUserRepository.findByEmail(email)
 						.orElseThrow(() -> new UsernameNotFoundException("User does not exists"));
 		
-        // check if the current password is correct
+        // chequeo password
         if (!bCryptPasswordEncoder.matches(request.currentPassword(), user.getPassword())) {
             throw new IllegalStateException("Wrong password");
         }
         
-        // check if the two new passwords are the same
+        // chequeo nueva password
         if (!request.newPassword().equals(request.confirmationPassword())) {
             throw new IllegalStateException("Password are not the same");
         }

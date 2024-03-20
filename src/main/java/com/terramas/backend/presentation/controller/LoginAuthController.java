@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.terramas.backend.configuration.JwtService;
@@ -37,4 +38,10 @@ public class LoginAuthController {
 		authenticationService.changePassword(request, email);
 		return ResponseEntity.ok("Password changed succesfully");
 	}
+	
+	@PostMapping("/setAdmin/{email}")
+	public String setAdmin(@PathVariable String email, @RequestParam String password) {
+        // Use email and password here
+        return "Received email: " + email + " and password: " + password;
+    }
 }

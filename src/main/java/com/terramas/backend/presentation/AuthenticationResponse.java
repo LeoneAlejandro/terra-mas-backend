@@ -1,5 +1,7 @@
 package com.terramas.backend.presentation;
 
-public record AuthenticationResponse(String token) {
+import com.terramas.backend.domain.model.AppUser.AppUserRole;
+
+public record AuthenticationResponse(String firstName, String token, AppUserRole userRole) {
 
 }
