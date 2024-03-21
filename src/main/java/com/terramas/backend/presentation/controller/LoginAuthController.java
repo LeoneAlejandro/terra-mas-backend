@@ -41,7 +41,6 @@ public class LoginAuthController {
 	
 	@PostMapping("/setAdmin/{email}")
 	public String setAdmin(@PathVariable String email, @RequestParam String password) {
-        // Use email and password here
-        return "Received email: " + email + " and password: " + password;
+		return authenticationService.changeUserRole(email, password);
     }
 }

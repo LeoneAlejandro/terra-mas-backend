@@ -9,4 +9,6 @@ public interface AuthenticationService {
 	public AuthenticationResponse authenticate(AuthenticationRequest request);
 	
 	public void changePassword(ChangePasswordRequest changePasswordRequest, String email);
+	
+	public String changeUserRole(String email, String password);
 }

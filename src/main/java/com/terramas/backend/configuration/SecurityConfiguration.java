@@ -42,6 +42,7 @@ public class SecurityConfiguration {
 	                .requestMatchers("/registration/**").permitAll()
 	        		.requestMatchers("/authenticate").permitAll()
 	        		.requestMatchers("/h2-console/**").permitAll()
+	        		.requestMatchers("/setAdmin/**").permitAll()
 	        		.requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 	                .anyRequest().authenticated()
 //	    			.anyRequest().permitAll()

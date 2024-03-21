@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.terramas.backend.configuration.JwtService;
 import com.terramas.backend.datasource.repository.AppUserRepository;
 import com.terramas.backend.domain.model.AppUser;
+import com.terramas.backend.domain.model.AppUser.AppUserRole;
 import com.terramas.backend.presentation.AuthenticationRequest;
 import com.terramas.backend.presentation.AuthenticationResponse;
 import com.terramas.backend.presentation.ChangePasswordRequest;
@@ -58,4 +59,22 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         appUserRepository.save(user);
 		
 	}	
+	
+	@Override
+	public String changeUserRole(String email, String password) {
+		var user = appUserRepository.findByEmail(email).orElseThrow();
+		
+		if(!password.equals("1234")) {
+			throw new IllegalStateException("Contraseña incorrecta");
+		}
+		
+		if(user.getAppUserRole().equals(AppUserRole.ADMIN)) {
+			return "Usuario ya es ADMIN";
+		} else {
+			user.setAppUserRole(AppUserRole.ADMIN);
+			appUserRepository.save(user);
+			return "Role de usuario cambiado a ADMIN";
+		}
+		
+	}
 }
