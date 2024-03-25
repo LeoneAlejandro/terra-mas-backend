@@ -1,5 +1,8 @@
 package com.terramas.backend.service.impl;
 
+import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,12 +38,12 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
 		var user = appUserRepository.findByEmail(request.email()).orElseThrow();
 		var jwtToken = jwtService.generateToken(user);
-		return new AuthenticationResponse(user.getFristName(),jwtToken, user.getAppUserRole());
+		return new AuthenticationResponse(user.getFirstName(),jwtToken, user.getAppUserRole());
 	}
 
 	
 	@Override
-	public void changePassword(ChangePasswordRequest request, String email) {
+	public ResponseEntity<String> changePassword(ChangePasswordRequest request, String email) {
 		AppUser user = appUserRepository.findByEmail(email)
 						.orElseThrow(() -> new UsernameNotFoundException("User does not exists"));
 		
@@ -51,13 +54,14 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         
         // chequeo nueva password
         if (!request.newPassword().equals(request.confirmationPassword())) {
-            throw new IllegalStateException("Password are not the same");
+            throw new IllegalStateException("Las contraseñas no son correctas");
         }
         
         user.setPassword(bCryptPasswordEncoder.encode(request.newPassword()));
         
         appUserRepository.save(user);
 		
+        return ResponseEntity.ok("Contraseña cambiada correctamente");
 	}	
 	
 	@Override
@@ -76,5 +80,10 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 			return "Role de usuario cambiado a ADMIN";
 		}
 		
+	}
+
+	@Override
+	public Optional<AppUser> fetchUser(String email) {
+		return appUserRepository.findByEmail(email);
 	}
 }

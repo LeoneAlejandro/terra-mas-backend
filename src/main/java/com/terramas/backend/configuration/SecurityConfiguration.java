@@ -43,6 +43,7 @@ public class SecurityConfiguration {
 	        		.requestMatchers("/authenticate").permitAll()
 	        		.requestMatchers("/h2-console/**").permitAll()
 	        		.requestMatchers("/setAdmin/**").permitAll()
+	        		.requestMatchers("/fetchUser").permitAll()
 	        		.requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 	                .anyRequest().authenticated()
 //	    			.anyRequest().permitAll()

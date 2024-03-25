@@ -119,7 +119,7 @@ public class AppUser implements UserDetails, Serializable {
 		return appUserRole;
 	}	
 	
-	public String getFristName() {
+	public String getFirstName() {
 		return firstName;
 	}
 	

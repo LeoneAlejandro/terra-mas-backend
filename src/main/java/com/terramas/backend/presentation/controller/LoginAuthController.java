@@ -1,9 +1,12 @@
 package com.terramas.backend.presentation.controller;
 
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,14 +32,18 @@ public class LoginAuthController {
 
 	
 	@PostMapping("/authenticate")
-	public ResponseEntity<AuthenticationResponse>  authenticate(@RequestBody AuthenticationRequest request){
+	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
 		return ResponseEntity.ok(authenticationService.authenticate(request));
+	}
+	
+	@GetMapping("/userinfo/{email}")
+	public Optional<AppUser> userInfo(@PathVariable String email) {
+		return authenticationService.fetchUser(email);
 	}
 	
 	@PostMapping("/changepassword/{email}")
 	public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request, @PathVariable String email) {
-		authenticationService.changePassword(request, email);
-		return ResponseEntity.ok("Password changed succesfully");
+		return authenticationService.changePassword(request, email);
 	}
 	
 	@PostMapping("/setAdmin/{email}")
