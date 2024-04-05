@@ -18,4 +18,6 @@ public interface AuthenticationService {
 	public String changeUserRole(String email, String password);
 
 	public Optional<AppUser> fetchUser(String email);
+	
+	public String recoverPassword(String email);
 }

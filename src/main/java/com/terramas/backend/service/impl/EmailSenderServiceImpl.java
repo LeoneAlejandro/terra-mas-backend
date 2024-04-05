@@ -26,13 +26,13 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 	
 	@Override
 	@Async
-	public void send(String to, String email) {
+	public void send(String to, String emailContent) {
 		try {
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
-			helper.setText(email, true);
+			helper.setText(emailContent, true);
 			helper.setTo(to);
-			helper.setSubject("Confirm your email");
+			helper.setSubject("Recuperación de contraseña");
 			mailSender.send(mimeMessage);
 		} catch (MessagingException e) {
 			LOGGER.error("failed to send email", e);

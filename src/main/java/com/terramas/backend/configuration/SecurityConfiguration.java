@@ -44,6 +44,8 @@ public class SecurityConfiguration {
 	        		.requestMatchers("/h2-console/**").permitAll()
 	        		.requestMatchers("/setAdmin/**").permitAll()
 	        		.requestMatchers("/fetchUser").permitAll()
+	        		.requestMatchers("/recoverPassword/**").permitAll()
+	        		.requestMatchers("/resetpassword/**").permitAll()
 	        		.requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 	                .anyRequest().authenticated()
 //	    			.anyRequest().permitAll()

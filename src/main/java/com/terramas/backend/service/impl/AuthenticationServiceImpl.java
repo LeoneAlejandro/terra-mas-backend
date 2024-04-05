@@ -1,6 +1,8 @@
 package com.terramas.backend.service.impl;
 
+import java.nio.charset.Charset;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +19,7 @@ import com.terramas.backend.presentation.AuthenticationRequest;
 import com.terramas.backend.presentation.AuthenticationResponse;
 import com.terramas.backend.presentation.ChangePasswordRequest;
 import com.terramas.backend.service.AuthenticationService;
+import com.terramas.backend.service.PasswordGenerator;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService{
@@ -25,13 +28,15 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final PasswordGenerator passwordGenerator;
 
 	
-	public AuthenticationServiceImpl(AppUserRepository appUserRepository, JwtService jwtService, AuthenticationManager authenticationManager, BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public AuthenticationServiceImpl(AppUserRepository appUserRepository, JwtService jwtService, AuthenticationManager authenticationManager, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordGenerator passwordGenerator) {
 		this.appUserRepository = appUserRepository;
 		this.jwtService = jwtService;
 		this.authenticationManager = authenticationManager;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+		this.passwordGenerator = passwordGenerator;
 	}
 	
 	public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -45,16 +50,20 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	@Override
 	public ResponseEntity<String> changePassword(ChangePasswordRequest request, String email) {
 		AppUser user = appUserRepository.findByEmail(email)
-						.orElseThrow(() -> new UsernameNotFoundException("User does not exists"));
+						.orElseThrow(() -> new UsernameNotFoundException("Usuario no existe"));
 		
         // chequeo password
         if (!bCryptPasswordEncoder.matches(request.currentPassword(), user.getPassword())) {
-            throw new IllegalStateException("Wrong password");
+            throw new IllegalStateException("Contraseña incorrecta");
         }
-        
+        // chequeo nueva password vs vieja
+        if (bCryptPasswordEncoder.matches(request.newPassword(), user.getPassword())) {
+            throw new IllegalStateException("La nueva contraseña es igual a la anterior");
+        }
+                
         // chequeo nueva password
         if (!request.newPassword().equals(request.confirmationPassword())) {
-            throw new IllegalStateException("Las contraseñas no son correctas");
+            throw new IllegalStateException("Las contraseñas no coinciden");
         }
         
         user.setPassword(bCryptPasswordEncoder.encode(request.newPassword()));
@@ -85,5 +94,18 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	@Override
 	public Optional<AppUser> fetchUser(String email) {
 		return appUserRepository.findByEmail(email);
+	}
+
+	@Override
+	public String recoverPassword(String email) {
+		AppUser user = appUserRepository.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("Usuario no existe"));
+
+		String newRandomPassword = passwordGenerator.generateRandomPassword();
+	    	    	    
+        user.setPassword(bCryptPasswordEncoder.encode(newRandomPassword));
+        appUserRepository.save(user);
+        
+		return newRandomPassword;
 	}
 }

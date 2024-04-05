@@ -3,9 +3,6 @@ package com.terramas.backend.presentation.controller;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.terramas.backend.configuration.JwtService;
-import com.terramas.backend.datasource.repository.AppUserRepository;
 import com.terramas.backend.domain.model.AppUser;
 import com.terramas.backend.presentation.AuthenticationRequest;
 import com.terramas.backend.presentation.AuthenticationResponse;
@@ -50,4 +45,9 @@ public class LoginAuthController {
 	public String setAdmin(@PathVariable String email, @RequestParam String password) {
 		return authenticationService.changeUserRole(email, password);
     }
+	
+	@PostMapping("/recoverPassword/{email}")
+	public String resetPassword(@PathVariable String email) {
+		return authenticationService.recoverPassword(email);
+	}
 }
