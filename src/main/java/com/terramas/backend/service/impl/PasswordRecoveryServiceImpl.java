@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +20,43 @@ import com.terramas.backend.service.PasswordRecoveryService;
 public class PasswordRecoveryServiceImpl implements PasswordRecoveryService {
 
 	private final static String EMAIL_TEMPLATE_LOCATION = "templates/email_template.html";
-	private final static String CONFRIM_TOKEN_URL = "https://http://localhost:3000/reset-password/";
+	private final static String CONFRIM_TOKEN_URL = "http://localhost:3000/reset-password/";
 	@Autowired
 	public EmailSenderService emailSender;
+	@Autowired
+	public RedisServiceImpl redisService;
+	
+//	private PasswordRecoveryServiceImpl(EmailSenderService emailSender, RedisTemplate<String, String> redisTemplate) {
+//		this.emailSender = emailSender;
+//		this.redisTemplate = redisTemplate;
+//	}
+//	
 	
 	@Override
 	public ResponseEntity<?> sendPasswordRecoveryLink(String email) {
         String uid = generateUID();
         
-        // Save the UID in a database or cache with an expiration time
+        redisService.saveUid(uid, email);      
 		
         String recoveryLink = CONFRIM_TOKEN_URL + uid;
-//        String emailContent = "Click the following link to reset your password: " + recoveryLink;
-//        emailSenderService.send(email, emailContent);
         System.out.println(recoveryLink);
-		emailSender.send(email, buildEmail("Nameeee", recoveryLink));
+		emailSender.send(email, buildEmail(email.toString(), recoveryLink));
 
         return ResponseEntity.ok().build();
+	}	
+	
+	
+	public ResponseEntity<?> checkUid(String uid) {
+		
+		String uidValidation = redisService.findEmailByUid(uid);
+		
+		if(uidValidation == null) {
+			throw new IllegalArgumentException("UID no existe");
+		}
+		
+		System.out.println(uidValidation);
+		
+		return ResponseEntity.ok().build();
 	}
 	
     private String generateUID() {

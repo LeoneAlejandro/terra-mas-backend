@@ -2,9 +2,9 @@ package com.terramas.backend.presentation.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.terramas.backend.service.PasswordRecoveryService;
@@ -20,10 +20,10 @@ public class RecoverPasswordController {
 		return passwordRecoveryService.sendPasswordRecoveryLink(email);
 	}
 	
-//	@PostMapping("/resetpassword/{email}")
-//	public String initiatePasswordRecovery(@PathVariable String email) {
-//		System.out.println("OK" + email);
-//		throw new IllegalArgumentException();
-//	}
+	@GetMapping("/resetpassword/verify-uid/{uid}")
+	public ResponseEntity<?> verifyUid(@PathVariable String uid) {
+		return passwordRecoveryService.checkUid(uid);
+	}
+	
 	
 }

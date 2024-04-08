@@ -5,4 +5,6 @@ import org.springframework.http.ResponseEntity;
 public interface PasswordRecoveryService {
 
 	public ResponseEntity<?> sendPasswordRecoveryLink(String email);
+	
+	public ResponseEntity<?> checkUid(String uid);
 }
