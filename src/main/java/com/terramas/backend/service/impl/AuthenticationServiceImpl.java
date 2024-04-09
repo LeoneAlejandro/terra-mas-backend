@@ -97,15 +97,14 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	}
 
 	@Override
-	public String recoverPassword(String email) {
+	public ResponseEntity<String> setRecoveryPassword(String email, String newPassword) {
 		AppUser user = appUserRepository.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuario no existe"));
 
-		String newRandomPassword = passwordGenerator.generateRandomPassword();
 	    	    	    
-        user.setPassword(bCryptPasswordEncoder.encode(newRandomPassword));
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
         appUserRepository.save(user);
         
-		return newRandomPassword;
+		return ResponseEntity.ok("Contraseña cambiada exitosamente");
 	}
 }

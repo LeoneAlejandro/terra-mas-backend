@@ -19,5 +19,5 @@ public interface AuthenticationService {
 
 	public Optional<AppUser> fetchUser(String email);
 	
-	public String recoverPassword(String email);
+	public ResponseEntity<String> setRecoveryPassword(String email, String newPassword);
 }

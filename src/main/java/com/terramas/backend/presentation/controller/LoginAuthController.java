@@ -46,8 +46,8 @@ public class LoginAuthController {
 		return authenticationService.changeUserRole(email, password);
     }
 	
-	@PostMapping("/recoverPassword/{email}")
-	public String resetPassword(@PathVariable String email) {
-		return authenticationService.recoverPassword(email);
-	}
+//	@PostMapping("/recoverPassword/{email}")
+//	public String resetPassword(@PathVariable String email) {
+//		return authenticationService.recoverPassword(email);
+//	}
 }
