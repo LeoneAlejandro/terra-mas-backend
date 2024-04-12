@@ -55,8 +55,6 @@ public class PasswordRecoveryServiceImpl implements PasswordRecoveryService {
 			throw new IllegalArgumentException("UID no existe");
 		}
 		
-//		System.out.println(uidValidation);
-		
 		return ResponseEntity.ok(uidValidation);
 	}
 	
