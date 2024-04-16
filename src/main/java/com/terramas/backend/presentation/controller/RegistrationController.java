@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.terramas.backend.domain.service.RegistrationService;
 import com.terramas.backend.presentation.RegistrationRequest;
-import com.terramas.backend.service.RegistrationService;
 
 @RestController
 @RequestMapping(path = "/registration")

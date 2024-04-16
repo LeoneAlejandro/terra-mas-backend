@@ -1,4 +1,4 @@
-package com.terramas.backend.service.impl;
+package com.terramas.backend.domain.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.terramas.backend.domain.service.AuthenticationService;
+import com.terramas.backend.domain.service.EmailSenderService;
+import com.terramas.backend.domain.service.PasswordRecoveryService;
 import com.terramas.backend.presentation.RecoveryPasswordRequest;
-import com.terramas.backend.service.AuthenticationService;
-import com.terramas.backend.service.EmailSenderService;
-import com.terramas.backend.service.PasswordRecoveryService;
 
 @Service
 public class PasswordRecoveryServiceImpl implements PasswordRecoveryService {
@@ -27,11 +27,6 @@ public class PasswordRecoveryServiceImpl implements PasswordRecoveryService {
 	@Autowired
 	public AuthenticationService authService;
 	
-//	private PasswordRecoveryServiceImpl(EmailSenderService emailSender, RedisTemplate<String, String> redisTemplate) {
-//		this.emailSender = emailSender;
-//		this.redisTemplate = redisTemplate;
-//	}
-//	
 	
 	@Override
 	public ResponseEntity<?> sendPasswordRecoveryLink(String email) {
@@ -60,8 +55,8 @@ public class PasswordRecoveryServiceImpl implements PasswordRecoveryService {
 	
 	@Override
 	public ResponseEntity<String> resetNewPassword(RecoveryPasswordRequest request) {
-		//TODO: DELETE UID
-		return authService.setRecoveryPassword(request.email(), request.newPassword());
+		//TODO: DELETE UID ???
+		 return authService.setRecoveryPassword(request.email(), request.newPassword());
 	}
 	
     private String generateUID() {

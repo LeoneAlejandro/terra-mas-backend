@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.terramas.backend.domain.model.AppUser;
+import com.terramas.backend.domain.service.AuthenticationService;
 import com.terramas.backend.presentation.AuthenticationRequest;
 import com.terramas.backend.presentation.AuthenticationResponse;
 import com.terramas.backend.presentation.ChangePasswordRequest;
-import com.terramas.backend.service.AuthenticationService;
 
 @RestController
 public class LoginAuthController {

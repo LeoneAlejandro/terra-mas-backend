@@ -1,4 +1,4 @@
-package com.terramas.backend.service.impl;
+package com.terramas.backend.domain.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +7,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.terramas.backend.service.EmailSenderService;
+import com.terramas.backend.domain.service.EmailSenderService;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

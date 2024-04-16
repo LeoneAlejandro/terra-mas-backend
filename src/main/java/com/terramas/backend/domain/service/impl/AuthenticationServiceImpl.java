@@ -1,8 +1,6 @@
-package com.terramas.backend.service.impl;
+package com.terramas.backend.domain.service.impl;
 
-import java.nio.charset.Charset;
 import java.util.Optional;
-import java.util.Random;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,11 +13,10 @@ import com.terramas.backend.configuration.JwtService;
 import com.terramas.backend.datasource.repository.AppUserRepository;
 import com.terramas.backend.domain.model.AppUser;
 import com.terramas.backend.domain.model.AppUser.AppUserRole;
+import com.terramas.backend.domain.service.AuthenticationService;
 import com.terramas.backend.presentation.AuthenticationRequest;
 import com.terramas.backend.presentation.AuthenticationResponse;
 import com.terramas.backend.presentation.ChangePasswordRequest;
-import com.terramas.backend.service.AuthenticationService;
-import com.terramas.backend.service.PasswordGenerator;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService{
@@ -28,15 +25,13 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	private final PasswordGenerator passwordGenerator;
 
 	
-	public AuthenticationServiceImpl(AppUserRepository appUserRepository, JwtService jwtService, AuthenticationManager authenticationManager, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordGenerator passwordGenerator) {
+	public AuthenticationServiceImpl(AppUserRepository appUserRepository, JwtService jwtService, AuthenticationManager authenticationManager, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.appUserRepository = appUserRepository;
 		this.jwtService = jwtService;
 		this.authenticationManager = authenticationManager;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-		this.passwordGenerator = passwordGenerator;
 	}
 	
 	public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -86,7 +81,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 		} else {
 			user.setAppUserRole(AppUserRole.ADMIN);
 			appUserRepository.save(user);
-			return "Role de usuario cambiado a ADMIN";
+			return "Role de usuario cambiado a ADMIN exitosamente";
 		}
 		
 	}

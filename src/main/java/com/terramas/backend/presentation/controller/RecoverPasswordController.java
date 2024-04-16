@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.terramas.backend.domain.service.PasswordRecoveryService;
 import com.terramas.backend.presentation.RecoveryPasswordRequest;
-import com.terramas.backend.service.PasswordRecoveryService;
 
 @RestController
 public class RecoverPasswordController {

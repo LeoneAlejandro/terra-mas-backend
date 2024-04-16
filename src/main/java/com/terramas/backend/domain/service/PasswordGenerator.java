@@ -1,4 +1,4 @@
-package com.terramas.backend.service;
+package com.terramas.backend.domain.service;
 
 public interface PasswordGenerator {
 

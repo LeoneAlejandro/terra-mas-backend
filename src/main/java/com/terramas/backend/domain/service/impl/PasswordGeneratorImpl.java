@@ -1,10 +1,10 @@
-package com.terramas.backend.service.impl;
+package com.terramas.backend.domain.service.impl;
 
 import java.security.SecureRandom;
 
 import org.springframework.stereotype.Service;
 
-import com.terramas.backend.service.PasswordGenerator;
+import com.terramas.backend.domain.service.PasswordGenerator;
 
 @Service
 public class PasswordGeneratorImpl implements PasswordGenerator {

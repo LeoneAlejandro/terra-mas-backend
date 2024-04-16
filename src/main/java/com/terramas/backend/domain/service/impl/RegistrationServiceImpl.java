@@ -1,13 +1,13 @@
-package com.terramas.backend.service.impl;
+package com.terramas.backend.domain.service.impl;
 
 
 import org.springframework.stereotype.Service;
 
 import com.terramas.backend.domain.model.AppUser;
 import com.terramas.backend.domain.model.AppUser.AppUserRole;
+import com.terramas.backend.domain.service.AppUserService;
+import com.terramas.backend.domain.service.RegistrationService;
 import com.terramas.backend.presentation.RegistrationRequest;
-import com.terramas.backend.service.AppUserService;
-import com.terramas.backend.service.RegistrationService;
 
 
 @Service
