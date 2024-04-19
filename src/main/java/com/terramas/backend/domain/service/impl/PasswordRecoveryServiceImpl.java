@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -55,8 +56,14 @@ public class PasswordRecoveryServiceImpl implements PasswordRecoveryService {
 	
 	@Override
 	public ResponseEntity<String> resetNewPassword(RecoveryPasswordRequest request) {
+		ResponseEntity<String> responseEntity = authService.setRecoveryPassword(request.email(), request.newPassword());
+		
+		if(responseEntity.getStatusCode() == HttpStatus.OK) {
+			redisService.deleteUid(request.uid());
+		}
 		//TODO: DELETE UID ???
-		 return authService.setRecoveryPassword(request.email(), request.newPassword());
+//		 return authService.setRecoveryPassword(request.email(), request.newPassword());
+		return responseEntity;
 	}
 	
     private String generateUID() {

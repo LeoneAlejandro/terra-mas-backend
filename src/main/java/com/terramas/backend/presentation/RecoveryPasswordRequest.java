@@ -1,5 +1,5 @@
 package com.terramas.backend.presentation;
 
-public record RecoveryPasswordRequest(String email, String newPassword) {
+public record RecoveryPasswordRequest(String email, String newPassword, String uid) {
 
 }

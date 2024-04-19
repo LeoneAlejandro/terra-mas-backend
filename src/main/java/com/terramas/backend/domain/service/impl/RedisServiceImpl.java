@@ -27,4 +27,8 @@ public class RedisServiceImpl {
 	public String findEmailByUid(String uid) {
 		return redisTemplate.opsForValue().get(uid);
 	}
+	
+    public void deleteUid(String uid) {
+        redisTemplate.delete(uid);
+    }
 }
