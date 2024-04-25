@@ -9,8 +9,11 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.terramas.backend.datasource.repository.AppUserRepository;
+import com.terramas.backend.domain.model.AppUser;
 import com.terramas.backend.domain.service.AuthenticationService;
 import com.terramas.backend.domain.service.EmailSenderService;
 import com.terramas.backend.domain.service.PasswordRecoveryService;
@@ -19,7 +22,7 @@ import com.terramas.backend.presentation.RecoveryPasswordRequest;
 @Service
 public class PasswordRecoveryServiceImpl implements PasswordRecoveryService {
 
-	private final static String EMAIL_TEMPLATE_LOCATION = "templates/email_template.html";
+	private final static String EMAIL_TEMPLATE_LOCATION = "templates/email.html";
 	private final static String CONFRIM_TOKEN_URL = "http://localhost:3000/reset-password/";
 	@Autowired
 	public EmailSenderService emailSender;
@@ -27,16 +30,21 @@ public class PasswordRecoveryServiceImpl implements PasswordRecoveryService {
 	public RedisServiceImpl redisService;
 	@Autowired
 	public AuthenticationService authService;
+	@Autowired
+	public AppUserRepository appUserRepository;
+	
 	
 	
 	@Override
 	public ResponseEntity<?> sendPasswordRecoveryLink(String email) {
+		AppUser user = appUserRepository.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("Usuario no existe"));
+		
         String uid = generateUID();
         
         redisService.saveUid(uid, email);      
 		
         String recoveryLink = CONFRIM_TOKEN_URL + uid;
-        System.out.println(recoveryLink);
 		emailSender.send(email, buildEmail(email.toString(), recoveryLink));
 
         return ResponseEntity.ok().build();
@@ -61,8 +69,7 @@ public class PasswordRecoveryServiceImpl implements PasswordRecoveryService {
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
 			redisService.deleteUid(request.uid());
 		}
-		//TODO: DELETE UID ???
-//		 return authService.setRecoveryPassword(request.email(), request.newPassword());
+
 		return responseEntity;
 	}
 	

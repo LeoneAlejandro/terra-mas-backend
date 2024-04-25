@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- <link href="https://fonts.cdnfonts.com/css/railway" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.cdnfonts.com/css/raleway-5" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway&display=swap">
+    <style>
+        /* @import url('https://fonts.cdnfonts.com/css/railway'); */
+
+        /* @font-face {
+            font-family: 'Raleway';
+                src: url('font/Raleway/static/Raleway-Light.ttf') format('woff2'),
+                    url('font/Raleway/static/Raleway-Light.ttf') format('woff');
+                font-weight: bolder;
+                font-style: normal;
+        } */
+
+        .template {
+            height: 700px;
+            width: 500px;
+            background-image: url('https://i.ibb.co/HB9zQhT/email-background.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom center;
+            background-color: rgb(254,254,229);
+
+
+            text-align: center;
+
+            /* font-family: 'Raleway'; */
+            /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .reset-password-image{
+            padding-top: 20px;
+            width: 100px;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            color: #000004;
+        }
+
+        .message {
+            padding: 0px 40px 10px 40px;
+            text-align: left;
+            text-indent: 15px;
+            color: #000004;
+        }
+        
+        .message2 {
+            padding: 10px 40px 10px 40px;
+            text-align: left;
+            text-indent: 15px;
+            color: #000004;
+        }
+
+        .button {
+            border-radius: 20px;
+            border: 0.1vw solid #FDB441;
+            background-color: #FDB441;
+            color: #f7f7f7;
+            /* padding: 1.3vw 2.5vw; */
+            padding: 8px 13px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .button:hover{
+            cursor: pointer;
+        }
+
+        .button:active {
+            transform: scale(0.95);
+        }
+
+        .button:visited {
+            color: #f7f7f7;
+        }
+
+        .signature {
+            padding-left: 50px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .terramas-logo {
+            width: 100px;
+        }
+
+        .ii a[href] {
+            color: white;
+        }
+
+        .ii a[href]:visited {
+            color: white;
+        }
+
+        a {
+            color: #fffff4 !important;
+        }
+
+        p {
+            color: #000004;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="template">
+        <!-- <img class="reset-password-image" src='https://i.imgur.com/O0QEv2z.png' alt="reset-icon" title="reset-icon"> -->
+        <img class="reset-password-image" src='https://i.ibb.co/Mszs4ff/password.png' alt="reset-icon" title="reset-icon">
+        <div class="message">
+            <h1>Olvidaste tu contraseña ?</h1>
+            <p>Te enviamos este correo porque recibimos una petición de recuperación de cuenta en nuestro sitio web. </p>
+            <p> Si quieres reestablecer tu contraseña por favor hacé click en el siguiente botón:</p>
+        </div>
+
+        <a class="button" href="{{link}}" style="color: #fffff4;">Reestablecer contraseña</a>
+
+        <div class="message2">
+            <p>
+                Si no fuiste vos quien pidió reestablecer la contraseña de tu cuenta, por favor desestimá este correo.
+            </p>
+        </div>
+
+        <div class="signature">
+            <p>
+                Muchas gracias
+            <br>
+                Terra Mas SRL
+            </p>
+        </div>
+    </div>
+    
+</body>
+
+</html>
