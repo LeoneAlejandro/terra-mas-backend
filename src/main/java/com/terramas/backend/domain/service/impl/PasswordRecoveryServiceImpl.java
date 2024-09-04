@@ -34,7 +34,6 @@ public class PasswordRecoveryServiceImpl implements PasswordRecoveryService {
 	public AppUserRepository appUserRepository;
 	
 	
-	
 	@Override
 	public ResponseEntity<?> sendPasswordRecoveryLink(String email) {
 		AppUser user = appUserRepository.findByEmail(email)

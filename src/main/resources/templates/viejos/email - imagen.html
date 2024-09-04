@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .template {
+            height: 700px;
+            width: 500px;
+            background-image: url('https://i.ibb.co/2hrBR2c/email-background-wtext.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom center;
+            text-align: center;
+        }
+
+        .button-holder {
+            padding-top: 320px;
+        }
+
+        .button {
+            border-radius: 20px;
+            border: 0.1vw solid #FDB441;
+            background-color: #FDB441;
+            padding: 8px 13px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .button:hover{
+            cursor: pointer;
+        }
+
+        .button:active {
+            transform: scale(0.95);
+        }
+
+        .button:visited {
+            color: #fffff4;
+        }
+
+        a {
+            color: #fffff4 !important;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="template">
+        <div class="button-holder">
+            <a class="button" href="{{link}}">Reestablecer contraseña</a>
+        </div>
+    </div>
+    
+</body>
+
+</html>
